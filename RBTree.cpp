@@ -71,6 +71,7 @@ void rightRotate(RBNode* &root, RBNode* y) {
        
         1: { if uncle is red , not null }
             recoloring at parent level ( both parent, uncle changes from red to black )
+            recolor grandparent
             set newnode as grandparent & loop continues
         2: { if uncle is black or null }
             bring grandparent, parent & newnode in same line ( same LL, RR. Not LR or RL )
