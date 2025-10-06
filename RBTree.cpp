@@ -80,25 +80,26 @@ void rightRotate(RBNode* &root, RBNode* y) {
 
 */
 
-void fixTree( RBNode *root, RBNode *newnode )
+void fixTree( RBNode *&root, RBNode *newnode )
 {
-    while( newnode->parent != nullptr  &&  newnode->parent->color == 'R' )
+    while( newnode->parent != nullptr  &&  newnode->parent->color == 'R' )     // while parent is not null & red
     {
-        RBNode *grandparent = newnode->parent->parent;
+        RBNode *grandparent = newnode->parent->parent;     // get grandparent
 
-        if( grandparent->left == newnode->parent )
+        if( grandparent->left == newnode->parent )      // parent is at left
         {
-            RBNode *uncle = grandparent->right;
+            RBNode *uncle = grandparent->right;     // initialise uncle
 
-            if( uncle != nullptr  &&  uncle->color == 'R' )
+            if( uncle != nullptr  &&  uncle->color == 'R' )         // if uncle is not null and red, recoloring occurs
             {
                 newnode->parent->color = 'B';
                 uncle->color = 'B';
                 grandparent->color = 'R';
                 newnode = grandparent;
+                continue;
             }
 
-            else
+            else    // if uncle is null or black, bringing child, parent & grandparent in same line & rotating grandparent opposite to child
             {
                 if( newnode->parent->right == newnode )
                 {
@@ -112,6 +113,8 @@ void fixTree( RBNode *root, RBNode *newnode )
             }
         }
 
+
+        // repeat above same for if parent is at right
         else if( grandparent->right == newnode->parent )
         {
             RBNode *uncle = grandparent->left;
@@ -122,6 +125,7 @@ void fixTree( RBNode *root, RBNode *newnode )
                 newnode->parent->color = 'B';
                 grandparent->color = 'R';
                 newnode = grandparent;
+                continue;
             }
 
             else
@@ -257,7 +261,7 @@ void deleteNode( RBNode* &root, int key )
         else if( temp->parent->right == temp )
         {
             temp->parent->right = temp->left;
-            temp->parent->left->color = 'B';
+            temp->parent->right->color = 'B';
         }
     }
 
